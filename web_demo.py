@@ -1,8 +1,11 @@
 from transformers import AutoModel, AutoTokenizer
 import gradio as gr
+import torch_directml
 
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
+dml = torch_directml.device()
+
+tokenizer = AutoTokenizer.from_pretrained("THUDM\chatglm-6b-int4", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM\chatglm-6b-int4", trust_remote_code=True).half().to(dml)
 model = model.eval()
 
 MAX_TURNS = 20

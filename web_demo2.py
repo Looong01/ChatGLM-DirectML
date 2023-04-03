@@ -1,7 +1,9 @@
 from transformers import AutoModel, AutoTokenizer
 import streamlit as st
 from streamlit_chat import message
+import torch_directml
 
+dml = torch_directml.device()
 
 st.set_page_config(
     page_title="ChatGLM-6b 演示",
@@ -11,8 +13,8 @@ st.set_page_config(
 
 @st.cache_resource
 def get_model():
-    tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
-    model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
+    tokenizer = AutoTokenizer.from_pretrained("THUDM\chatglm-6b", trust_remote_code=True)
+    model = AutoModel.from_pretrained("THUDM\chatglm-6b", trust_remote_code=True).half().to(dml)
     model = model.eval()
     return tokenizer, model
 

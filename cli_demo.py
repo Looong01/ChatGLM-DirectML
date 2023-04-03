@@ -2,9 +2,12 @@ import os
 import platform
 import signal
 from transformers import AutoTokenizer, AutoModel
+import torch_directml
 
-tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm-6b", trust_remote_code=True).half().cuda()
+dml = torch_directml.device()
+
+tokenizer = AutoTokenizer.from_pretrained("THUDM\chatglm-6b", trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM\chatglm-6b", trust_remote_code=True).half().to(dml)
 model = model.eval()
 
 os_name = platform.system()
